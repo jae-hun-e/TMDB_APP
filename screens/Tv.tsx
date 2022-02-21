@@ -1,7 +1,11 @@
 import { Text, View } from "react-native";
 
-export default function () {
-  <View>
-    <Text>Tv</Text>
-  </View>;
-}
+const Tv = () => {
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text>Tv</Text>
+    </View>
+  );
+};
+
+export default Tv;

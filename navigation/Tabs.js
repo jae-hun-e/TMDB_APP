@@ -10,9 +10,12 @@ import { Ionicons } from "@expo/vector-icons";
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
-  const isDark = useColorScheme() === "dark";
+  const isDark = useColorScheme() !== "dark";
   return (
     <Tab.Navigator
+      sceneContainerStyle={{
+        backgroundColor: isDark ? BLACK_COLOR : "white",
+      }}
       screenOptions={{
         tabBarStyle: {
           backgroundColor: isDark ? BLACK_COLOR : "white",
