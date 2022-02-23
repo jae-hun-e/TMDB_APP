@@ -7,7 +7,11 @@ interface IPosterProps {
 }
 
 const Poster: React.FC<IPosterProps> = ({ path }) => {
-  return <PosterImg source={{ uri: makeImgPath(path) }} />;
+  return path ? (
+    <PosterImg source={{ uri: makeImgPath(path) }} />
+  ) : (
+    <DefaultImg />
+  );
 };
 export default Poster;
 
@@ -15,4 +19,8 @@ const PosterImg = styled.Image`
   width: 100px;
   height: 150px;
   border-radius: 5px;
+`;
+
+const DefaultImg = styled.View`
+  background-color: rgba(255, 255, 255, 0.8);
 `;

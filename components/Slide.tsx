@@ -4,6 +4,7 @@ import { StyleSheet, useColorScheme, View } from "react-native";
 import styled from "styled-components/native";
 import { makeImgPath } from "../utils";
 import Poster from "./Poster";
+import Votes from "./Votes";
 
 interface ISlideProps {
   backdrop_path: string;
@@ -36,7 +37,9 @@ const Slide: React.FC<ISlideProps> = ({
             {overview.length > 0 ? (
               <OverView>{`${overview.slice(0, 50)}...더보기`}</OverView>
             ) : null}
-            {vote_average > 0 ? <Votes>{`⭐ ${vote_average}/10`}</Votes> : null}
+            <MVotes>
+              <Votes vote_average={vote_average} />
+            </MVotes>
           </MovieInfo>
         </Wrapper>
       </BlurView>
@@ -76,7 +79,7 @@ const OverView = styled.Text`
   font-weight: 400;
 `;
 
-const Votes = styled(OverView)`
+const MVotes = styled(OverView)`
   position: absolute;
   bottom: 10px;
   color: rgba(255, 255, 255, 0.8);

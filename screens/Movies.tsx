@@ -12,7 +12,6 @@ import Swiper from "react-native-swiper";
 // ! 대신 이건 웹 호환이 안된다.
 import styled from "styled-components/native";
 import Slide from "../components/Slide";
-import Poster from "../components/Poster";
 import TrendingMovies from "../components/TrendingMovies";
 import ComingMovies from "../components/ComingMovies";
 

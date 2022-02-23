@@ -16,8 +16,8 @@ const ComingMovies: React.FC<IComingProps> = ({
   overview,
 }) => {
   return (
-    <Wrapper key={id}>
-      {poster_path ? <Poster path={poster_path} /> : <DefaultImg />}
+    <Wrapper>
+      <Poster path={poster_path} />
       <MovieInfo>
         <Title>{original_title}</Title>
         <Release>
@@ -66,8 +66,4 @@ const Release = styled.Text`
   color: rgba(255, 255, 255, 0.8);
   font-size: 11px;
   margin: 10px 0 5px 0;
-`;
-
-const DefaultImg = styled.View`
-  background-color: rgba(255, 255, 255, 0.8);
 `;
