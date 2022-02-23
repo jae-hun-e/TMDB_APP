@@ -3,6 +3,7 @@ import React from "react";
 import { StyleSheet, useColorScheme, View } from "react-native";
 import styled from "styled-components/native";
 import { makeImgPath } from "../utils";
+import Poster from "./Poster";
 
 interface ISlideProps {
   backdrop_path: string;
@@ -29,15 +30,13 @@ const Slide: React.FC<ISlideProps> = ({
         tint={isDark ? "dark" : "light"}
       >
         <Wrapper>
-          <Poster source={{ uri: makeImgPath(poster_path) }} />
+          <Poster path={poster_path} />
           <MovieInfo>
             <Title>{original_title}</Title>
             {overview.length > 0 ? (
               <OverView>{`${overview.slice(0, 50)}...더보기`}</OverView>
             ) : null}
-            {vote_average > 0 ? (
-              <Votes>{`⭐ : ${vote_average}/10`}</Votes>
-            ) : null}
+            {vote_average > 0 ? <Votes>{`⭐ ${vote_average}/10`}</Votes> : null}
           </MovieInfo>
         </Wrapper>
       </BlurView>
@@ -54,12 +53,6 @@ const BgImg = styled.Image`
 const Wrapper = styled.View`
   flex-direction: row;
   margin: 10px;
-`;
-
-const Poster = styled.Image`
-  width: 100px;
-  height: 150px;
-  border-radius: 5;
 `;
 
 const MovieInfo = styled.View`
@@ -85,6 +78,6 @@ const OverView = styled.Text`
 
 const Votes = styled(OverView)`
   position: absolute;
-  bottom: 10;
+  bottom: 10px;
   color: rgba(255, 255, 255, 0.8);
 `;
