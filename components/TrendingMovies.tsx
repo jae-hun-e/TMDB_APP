@@ -29,9 +29,7 @@ const TrendingMovies: React.FC<ITrendingProps> = ({
 
 export default TrendingMovies;
 
-const RestMovie = styled.View`
-  margin-right: 20px;
-`;
+const RestMovie = styled.View``;
 
 const Title = styled.Text`
   color: white;

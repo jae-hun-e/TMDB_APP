@@ -17,6 +17,7 @@ const Tabs = () => {
         backgroundColor: isDark ? BLACK_COLOR : "white",
       }}
       screenOptions={{
+        unmountOnBlur: true, //! unmount될때 데이터 삭제해줌
         tabBarStyle: {
           backgroundColor: isDark ? BLACK_COLOR : "white",
         },

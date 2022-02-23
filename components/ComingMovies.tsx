@@ -39,7 +39,7 @@ export default ComingMovies;
 
 const Wrapper = styled.View`
   flex-direction: row;
-  margin: 20px;
+  margin: 0 20px 0 20px;
 `;
 
 const MovieInfo = styled.View`
