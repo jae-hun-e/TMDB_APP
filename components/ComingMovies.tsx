@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 import Poster from "./Poster";
 
 interface IComingProps {
-  poster_path: string;
+  poster_path: string | null;
   original_title: string;
   release_date: string;
   overview: string;
@@ -17,7 +17,7 @@ const ComingMovies: React.FC<IComingProps> = ({
 }) => {
   return (
     <Wrapper>
-      <Poster path={poster_path} />
+      <Poster path={poster_path || ""} />
       <MovieInfo>
         <Title>{original_title}</Title>
         <Release>

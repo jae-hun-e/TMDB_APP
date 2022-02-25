@@ -31,7 +31,6 @@
     "react-native-web": "0.17.1",
     "react-native-web-swiper": "^2.2.3",
     "react-query": "^3.34.16",
-    "recoil-react-native": "^0.0.8-patch1",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {

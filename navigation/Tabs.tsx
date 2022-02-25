@@ -1,11 +1,16 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Movies from "../screens/Movies";
-import Tv from "../screens/Tv";
 import Search from "../screens/Search";
 import { useColorScheme } from "react-native";
-import { BLACK_COLOR, DARK_GREY, LIGHT_GREY, YELLOW_COLOR } from "../colors";
+import {
+  BLACK_COLOR,
+  DARK_GREY,
+  LIGHT_GREY,
+  YELLOW_COLOR,
+} from "../Theme/colors";
 import { Ionicons } from "@expo/vector-icons";
+import Tvs from "../screens/Tvs";
 
 const Tab = createBottomTabNavigator();
 
@@ -17,7 +22,7 @@ const Tabs = () => {
         backgroundColor: isDark ? BLACK_COLOR : "white",
       }}
       screenOptions={{
-        unmountOnBlur: true, //! unmount될때 데이터 삭제해줌
+        // unmountOnBlur: true, //! unmount될때 데이터 삭제해줌
         tabBarStyle: {
           backgroundColor: isDark ? BLACK_COLOR : "white",
         },
@@ -46,8 +51,8 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name="TV"
-        component={Tv}
+        name="Tv"
+        component={Tvs}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="tv-outline" color={color} size={size} />

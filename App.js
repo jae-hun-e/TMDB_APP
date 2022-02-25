@@ -5,8 +5,7 @@ import { Asset } from "expo-asset";
 import { Ionicons } from "@expo/vector-icons";
 import { Image, useColorScheme } from "react-native";
 import { ThemeProvider } from "styled-components/native";
-import { darkTheme } from "./styled";
-import { lightTheme } from "./styled";
+import { darkTheme, lightTheme } from "./Theme/styled";
 import { NavigationContainer } from "@react-navigation/native";
 import Root from "./navigation/Root";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -31,7 +30,7 @@ export default function App() {
     const fonts = loadFonts([Ionicons.font]);
     await Promise.all([...fonts]);
   };
-  const isDark = useColorScheme() !== "dark";
+  const isDark = useColorScheme() === "dark";
 
   if (!ready) {
     return (

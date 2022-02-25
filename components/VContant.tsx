@@ -4,19 +4,19 @@ import Poster from "./Poster";
 import Votes from "./Votes";
 
 interface ITrendingProps {
-  poster_path: string;
+  poster_path: string | null;
   original_title: string;
   vote_average: number;
 }
 
-const TrendingMovies: React.FC<ITrendingProps> = ({
+const VContant: React.FC<ITrendingProps> = ({
   poster_path,
   original_title,
   vote_average,
 }) => {
   return (
     <RestMovie>
-      <Poster path={poster_path} />
+      <Poster path={poster_path || ""} />
       <Title>
         {original_title.length > 15
           ? `${original_title.slice(0, 15)}...`
@@ -27,7 +27,7 @@ const TrendingMovies: React.FC<ITrendingProps> = ({
   );
 };
 
-export default TrendingMovies;
+export default VContant;
 
 const RestMovie = styled.View``;
 
