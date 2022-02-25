@@ -1,92 +1,55 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
+import React, { useState } from "react";
 import {
-  Text,
-  View,
   ScrollView,
   FlatList,
-  ActivityIndicator,
   ListRenderItemInfo,
+  RefreshControl,
 } from "react-native";
 import { useQuery, useQueryClient } from "react-query";
 import styled from "styled-components/native";
 import { tvApi } from "../Api/api";
 import Loader from "../components/Loader";
-import TrendingMovies from "../components/VContant";
+import VContant from "../components/HContant";
+import VFlatList from "../components/HFlatList";
 import { ITvTypes, Tv } from "../types/apiType";
 
 const Tvs: React.FC<NativeStackScreenProps<any, "Tv">> = () => {
+  const [refreshing, setRefreshing] = useState(false);
   const queryGroup = useQueryClient();
-  const {
-    isLoading: tvTopRated,
-    data: topRated,
-    isRefetching: isrefetchTopRated,
-  } = useQuery<ITvTypes>(["tv", "topRated"], tvApi.topRated);
-  const {
-    isLoading: tvPopular,
-    data: popular,
-    isRefetching: isrefetchPopular,
-  } = useQuery<ITvTypes>(["tv", "popular"], tvApi.popular);
-  const {
-    isLoading: tvTrending,
-    data: trending,
-    isRefetching: isrefetchTrending,
-  } = useQuery<ITvTypes>(["tv", "trending"], tvApi.trending);
+  const { isLoading: tvTopRated, data: topRated } = useQuery<ITvTypes>(
+    ["tv", "topRated"],
+    tvApi.topRated
+  );
+  const { isLoading: tvPopular, data: popular } = useQuery<ITvTypes>(
+    ["tv", "popular"],
+    tvApi.popular
+  );
+  const { isLoading: tvTrending, data: trending } = useQuery<ITvTypes>(
+    ["tv", "trending"],
+    tvApi.trending
+  );
 
   const onRefresh = async () => {
     console.log("refreshTv");
+    setRefreshing(true);
     queryGroup.refetchQueries(["tv"]);
+    setRefreshing(false);
   };
 
-  const renderVMedia = ({ item }: ListRenderItemInfo<Tv>) => (
-    <TrendingMovies
-      poster_path={item.poster_path}
-      original_title={item.name}
-      vote_average={item.vote_average}
-    />
-  );
-
-  const movieKeyExtractor = (item: Tv) => item.id + "";
-
   const isLoding = tvTopRated || tvPopular || tvTrending;
-
-  const refreshiing =
-    isrefetchTopRated || isrefetchPopular || isrefetchTrending;
 
   return isLoding ? (
     <Loader />
   ) : (
-    <ScrollView>
-      <TopRated>
-        <ListTitle> TopRated</ListTitle>
-        <FlatList
-          keyExtractor={movieKeyExtractor}
-          horizontal
-          data={topRated?.results}
-          renderItem={renderVMedia}
-          ItemSeparatorComponent={VSeparator}
-        />
-      </TopRated>
-      <TvPopular>
-        <ListTitle> Popular</ListTitle>
-        <FlatList
-          keyExtractor={movieKeyExtractor}
-          horizontal
-          data={popular?.results}
-          renderItem={renderVMedia}
-          ItemSeparatorComponent={VSeparator}
-        />
-      </TvPopular>
-      <TvTrending>
-        <ListTitle> Trending</ListTitle>
-        <FlatList
-          keyExtractor={movieKeyExtractor}
-          horizontal
-          data={trending?.results}
-          renderItem={renderVMedia}
-          ItemSeparatorComponent={VSeparator}
-        />
-      </TvTrending>
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      <VFlatList title="TopRated" data={topRated?.results} />
+      <VFlatList title="Popular" data={popular?.results} />
+      <VFlatList title="Trending" data={trending?.results} />
     </ScrollView>
   );
 };

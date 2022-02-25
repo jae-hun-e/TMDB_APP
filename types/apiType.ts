@@ -44,3 +44,5 @@ export interface Tv {
 export interface ITvTypes extends BaseResponse {
   results: Tv[];
 }
+
+export interface IMedeia extends Tv, Movie {}

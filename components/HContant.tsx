@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components/native";
 import Poster from "./Poster";
 import Votes from "./Votes";
+import { View } from "react-native";
 
 interface ITrendingProps {
   poster_path: string | null;
@@ -15,7 +16,7 @@ const VContant: React.FC<ITrendingProps> = ({
   vote_average,
 }) => {
   return (
-    <RestMovie>
+    <View>
       <Poster path={poster_path || ""} />
       <Title>
         {original_title.length > 15
@@ -23,13 +24,11 @@ const VContant: React.FC<ITrendingProps> = ({
           : original_title}
       </Title>
       <Votes vote_average={vote_average} />
-    </RestMovie>
+    </View>
   );
 };
 
 export default VContant;
-
-const RestMovie = styled.View``;
 
 const Title = styled.Text`
   color: white;
