@@ -1,6 +1,12 @@
+import { useNavigation } from "@react-navigation/native";
 import { BlurView } from "expo-blur";
 import React from "react";
-import { StyleSheet, useColorScheme, View } from "react-native";
+import {
+  StyleSheet,
+  TouchableWithoutFeedback,
+  useColorScheme,
+  View,
+} from "react-native";
 import styled from "styled-components/native";
 import { makeImgPath } from "../utils";
 import Poster from "./Poster";
@@ -21,29 +27,41 @@ const Slide: React.FC<ISlideProps> = ({
   overview,
   vote_average,
 }) => {
-  const isDark = useColorScheme() !== "dark";
+  const isDark = useColorScheme() === "dark";
+  const navigation = useNavigation();
+
+  const goToDetail = () => {
+    navigation.navigate("Stack", {
+      screen: "Detail",
+      params: {
+        original_title,
+      },
+    });
+  };
   return (
-    <View style={{ flex: 1 }}>
-      <BgImg source={{ uri: makeImgPath(backdrop_path) }} />
-      <BlurView
-        intensity={70}
-        style={StyleSheet.absoluteFill}
-        tint={isDark ? "dark" : "light"}
-      >
-        <Wrapper>
-          <Poster path={poster_path} />
-          <MovieInfo>
-            <Title>{original_title}</Title>
-            {overview.length > 0 ? (
-              <OverView>{`${overview.slice(0, 50)}...더보기`}</OverView>
-            ) : null}
-            <MVotes>
-              <Votes vote_average={vote_average} />
-            </MVotes>
-          </MovieInfo>
-        </Wrapper>
-      </BlurView>
-    </View>
+    <TouchableWithoutFeedback onPress={goToDetail}>
+      <View style={{ flex: 1 }}>
+        <BgImg source={{ uri: makeImgPath(backdrop_path) }} />
+        <BlurView
+          intensity={50}
+          style={StyleSheet.absoluteFill}
+          tint={isDark ? "dark" : "light"}
+        >
+          <Wrapper>
+            <Poster path={poster_path} />
+            <MovieInfo>
+              <Title>{original_title}</Title>
+              {overview.length > 0 ? (
+                <OverView>{`${overview.slice(0, 50)}...더보기`}</OverView>
+              ) : null}
+              <MVotes>
+                <Votes vote_average={vote_average} />
+              </MVotes>
+            </MovieInfo>
+          </Wrapper>
+        </BlurView>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -74,7 +92,7 @@ const Title = styled.Text`
 const OverView = styled.Text`
   width: 100%;
   margin-top: 20px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 12px;
   font-weight: 400;
 `;

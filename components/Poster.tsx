@@ -22,5 +22,8 @@ const PosterImg = styled.Image`
 `;
 
 const DefaultImg = styled.View`
+  width: 100px;
+  height: 150px;
+  border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.8);
 `;

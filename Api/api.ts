@@ -19,6 +19,7 @@ export const moviesApi = {
       .catch(function (error) {
         throw error;
       }),
+
   trending: () =>
     fetch(
       `${BASE_URL}/trending/movie/week?api_key=${API_KEY}&language=ko&region=KR`
@@ -27,6 +28,19 @@ export const moviesApi = {
       .catch(function (error) {
         throw error;
       }),
+
+  search: ({ queryKey }: any) => {
+    // console.log("info", info);
+    const [_, query] = queryKey;
+    // console.log(query);
+    return fetch(
+      `${BASE_URL}/search/movie?api_key=${API_KEY}&language=ko&query=${query}&page=1&include_adult=false&region=KR`
+    )
+      .then((res) => res.json())
+      .catch(function (error) {
+        throw error;
+      });
+  },
 };
 
 export const tvApi = {
@@ -54,4 +68,14 @@ export const tvApi = {
       .catch(function (error) {
         throw error;
       }),
+  search: ({ queryKey }: any) => {
+    const [_, query] = queryKey;
+    return fetch(
+      `${BASE_URL}/search/tv?api_key=${API_KEY}&query=${query}&language=ko&region=KR`
+    )
+      .then((res) => res.json())
+      .catch(function (error) {
+        throw error;
+      });
+  },
 };

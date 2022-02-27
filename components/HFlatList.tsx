@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components/native";
 import { FlatList, ListRenderItemInfo } from "react-native";
-import { IMedeia, Tv } from "../types/apiType";
-import VContant from "./HContant";
+import { IMedeia } from "../types/apiType";
+import VContant from "./VContant";
 
 interface VFlatListProps {
   title: string;
   data: any[];
 }
 
-const VFlatList: React.FC<VFlatListProps> = ({ title, data }) => {
+const HFlatList: React.FC<VFlatListProps> = ({ title, data }) => {
   const movieKeyExtractor = (item: IMedeia) => item.id + "";
 
   const renderItem = ({ item }: ListRenderItemInfo<IMedeia>) => (
@@ -34,7 +34,7 @@ const VFlatList: React.FC<VFlatListProps> = ({ title, data }) => {
   );
 };
 
-export default VFlatList;
+export default HFlatList;
 
 const ListContainer = styled.View`
   margin: 10px;

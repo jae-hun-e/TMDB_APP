@@ -7,13 +7,13 @@ import Swiper from "react-native-swiper";
 // ! 대신 이건 웹 호환이 안된다.
 import styled from "styled-components/native";
 import Slide from "../components/Slide";
-import TrendingMovies from "../components/HContant";
-import ComingMovies from "../components/ComingMovies";
+import VContant from "../components/VContant";
+import HContant from "../components/HContant";
 import { useQuery, useQueryClient } from "react-query";
 import { moviesApi } from "../Api/api";
 import { IMovieTypes, Movie } from "../types/apiType";
 import Loader from "../components/Loader";
-import VFlatList from "../components/HFlatList";
+import HFlatList from "../components/HFlatList";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -45,7 +45,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
 
   // ! refatoring
   const renderVMedia = ({ item }: ListRenderItemInfo<Movie>) => (
-    <TrendingMovies
+    <VContant
       poster_path={item.poster_path}
       original_title={item.title}
       vote_average={item.vote_average}
@@ -53,7 +53,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
   );
 
   const renderHMedia = ({ item }: ListRenderItemInfo<Movie>) => (
-    <ComingMovies
+    <HContant
       poster_path={item.poster_path}
       original_title={item.title}
       release_date={item.release_date}
@@ -104,7 +104,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
               />
             ))}
           </Swiper>
-          <VFlatList title="Trending Movies" data={trending?.results} />
+          <HFlatList title="Trending Movies" data={trending?.results} />
           <ListTitle>ComingSoon Movies</ListTitle>
         </>
       }
@@ -124,10 +124,6 @@ const ListTitle = styled.Text`
   font-weight: 600;
   margin: 0 0 10px 20px;
 `;
-
-const TrendingScroll = styled.FlatList`
-  margin: 0 30px 10px 20px;
-` as unknown as typeof FlatList;
 
 const HSeparator = styled.View`
   height: 20px;
