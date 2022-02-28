@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import { IMedeia } from "../types/apiType";
 import VContant from "./VContant";
+import { HSeparator } from "../Theme/screenSize";
 
 interface VFlatListProps {
   title: string;
@@ -15,8 +16,9 @@ const HFlatList: React.FC<VFlatListProps> = ({ title, data }) => {
   const renderItem = ({ item }: ListRenderItemInfo<IMedeia>) => (
     <VContant
       poster_path={item.poster_path}
-      original_title={item.original_title ?? item.original_name}
+      original_title={item.title ?? item.name}
       vote_average={item.vote_average}
+      fillData={item}
     />
   );
 
@@ -26,7 +28,7 @@ const HFlatList: React.FC<VFlatListProps> = ({ title, data }) => {
       <FlatListBox
         keyExtractor={movieKeyExtractor}
         horizontal
-        ItemSeparatorComponent={VSeparator}
+        ItemSeparatorComponent={HSeparator}
         data={data}
         renderItem={renderItem}
       />
@@ -50,8 +52,4 @@ const Title = styled.Text`
   font-weight: 600;
   margin-left: 10px;
   margin-bottom: 10px;
-`;
-
-const VSeparator = styled.View`
-  width: 20px;
 `;

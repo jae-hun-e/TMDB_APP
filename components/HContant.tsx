@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
+import { Movie, Tv } from "../types/apiType";
 import Poster from "./Poster";
 import Votes from "./Votes";
 
@@ -11,6 +12,7 @@ interface IComingProps {
   release_date?: string;
   overview: string;
   vote_average?: number;
+  fillData: Movie | Tv;
 }
 
 const HContant: React.FC<IComingProps> = ({
@@ -19,6 +21,7 @@ const HContant: React.FC<IComingProps> = ({
   release_date,
   overview,
   vote_average,
+  fillData,
 }) => {
   const navigation = useNavigation();
 
@@ -26,7 +29,7 @@ const HContant: React.FC<IComingProps> = ({
     navigation.navigate("Stack", {
       screen: "Detail",
       params: {
-        original_title,
+        fillData,
       },
     });
   };

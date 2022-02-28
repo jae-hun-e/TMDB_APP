@@ -1,13 +1,13 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Text, View, TouchableOpacity, useColorScheme } from "react-native";
+import { useColorScheme } from "react-native";
 import { BLACK_COLOR, YELLOW_COLOR } from "../Theme/colors";
 import Detail from "../screens/Detail";
 
 const NativeStack = createNativeStackNavigator();
 
 const Stack = () => {
-  const isDark = useColorScheme() === "dark";
+  const isDark = useColorScheme() !== "dark";
   return (
     <NativeStack.Navigator
       screenOptions={{
@@ -20,7 +20,11 @@ const Stack = () => {
         },
       }}
     >
-      <NativeStack.Screen name="Detail" component={Detail} />
+      <NativeStack.Screen
+        name="Detail"
+        component={Detail}
+        options={{ backgroundColor: "black" }}
+      />
     </NativeStack.Navigator>
   );
 };

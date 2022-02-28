@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Dimensions, FlatList, ListRenderItemInfo } from "react-native";
+import { FlatList, ListRenderItemInfo } from "react-native";
 // import Swiper from "react-native-web-swiper";
 // ! IOS에서는 스크롤 이벤트가 걸린다 => react-native-swiper로 변경 (npm i --save react-native-swiper@next)
 import Swiper from "react-native-swiper";
 // ! 대신 이건 웹 호환이 안된다.
 import styled from "styled-components/native";
 import Slide from "../components/Slide";
-import VContant from "../components/VContant";
 import HContant from "../components/HContant";
 import { useQuery, useQueryClient } from "react-query";
 import { moviesApi } from "../Api/api";
 import { IMovieTypes, Movie } from "../types/apiType";
 import Loader from "../components/Loader";
 import HFlatList from "../components/HFlatList";
-
-const { height: SCREEN_HEIGHT } = Dimensions.get("window");
+import { SCREEN_HEIGHT, VSeparator } from "../Theme/screenSize";
 
 const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -45,19 +43,12 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
 
   // ! refatoring
   const renderVMedia = ({ item }: ListRenderItemInfo<Movie>) => (
-    <VContant
-      poster_path={item.poster_path}
-      original_title={item.title}
-      vote_average={item.vote_average}
-    />
-  );
-
-  const renderHMedia = ({ item }: ListRenderItemInfo<Movie>) => (
     <HContant
       poster_path={item.poster_path}
       original_title={item.title}
       release_date={item.release_date}
       overview={item.overview}
+      fillData={item}
     />
   );
 
@@ -101,6 +92,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
                 original_title={movie.title}
                 overview={movie.overview}
                 vote_average={movie.vote_average}
+                fillData={movie}
               />
             ))}
           </Swiper>
@@ -110,8 +102,8 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
       }
       keyExtractor={movieKeyExtractor}
       data={upComing.results}
-      renderItem={renderHMedia}
-      ItemSeparatorComponent={HSeparator}
+      renderItem={renderVMedia}
+      ItemSeparatorComponent={VSeparator}
     />
   ) : null;
 };
@@ -123,8 +115,4 @@ const ListTitle = styled.Text`
   font-size: 15px;
   font-weight: 600;
   margin: 0 0 10px 20px;
-`;
-
-const HSeparator = styled.View`
-  height: 20px;
 `;

@@ -4,17 +4,20 @@ import Poster from "./Poster";
 import Votes from "./Votes";
 import { TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Movie, Tv } from "../types/apiType";
 
 interface ITrendingProps {
   poster_path: string | null;
   original_title: string;
   vote_average: number;
+  fillData: Movie | Tv;
 }
 
 const VContant: React.FC<ITrendingProps> = ({
   poster_path,
   original_title,
   vote_average,
+  fillData,
 }) => {
   const navigation = useNavigation();
 
@@ -22,7 +25,7 @@ const VContant: React.FC<ITrendingProps> = ({
     navigation.navigate("Stack", {
       screen: "Detail",
       params: {
-        original_title,
+        ...fillData,
       },
     });
   };

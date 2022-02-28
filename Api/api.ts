@@ -41,6 +41,18 @@ export const moviesApi = {
         throw error;
       });
   },
+  detail: ({ queryKey }: any) => {
+    // console.log("info", info);
+    const [_, id] = queryKey;
+    // console.log(query);
+    return fetch(
+      `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=ko&append_to_response=videos,images`
+    )
+      .then((res) => res.json())
+      .catch(function (error) {
+        throw error;
+      });
+  },
 };
 
 export const tvApi = {
@@ -72,6 +84,18 @@ export const tvApi = {
     const [_, query] = queryKey;
     return fetch(
       `${BASE_URL}/search/tv?api_key=${API_KEY}&query=${query}&language=ko&region=KR`
+    )
+      .then((res) => res.json())
+      .catch(function (error) {
+        throw error;
+      });
+  },
+  detail: ({ queryKey }: any) => {
+    // console.log("info", info);
+    const [_, id] = queryKey;
+    // console.log(query);
+    return fetch(
+      `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=ko&append_to_response=videos,images`
     )
       .then((res) => res.json())
       .catch(function (error) {

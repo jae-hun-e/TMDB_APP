@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import styled from "styled-components/native";
+import { Movie } from "../types/apiType";
 import { makeImgPath } from "../utils";
 import Poster from "./Poster";
 import Votes from "./Votes";
@@ -18,6 +19,7 @@ interface ISlideProps {
   original_title: string;
   overview: string;
   vote_average: number;
+  fillData: Movie;
 }
 
 const Slide: React.FC<ISlideProps> = ({
@@ -26,6 +28,7 @@ const Slide: React.FC<ISlideProps> = ({
   original_title,
   overview,
   vote_average,
+  fillData,
 }) => {
   const isDark = useColorScheme() === "dark";
   const navigation = useNavigation();
@@ -34,7 +37,7 @@ const Slide: React.FC<ISlideProps> = ({
     navigation.navigate("Stack", {
       screen: "Detail",
       params: {
-        original_title,
+        ...fillData,
       },
     });
   };
