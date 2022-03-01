@@ -1,6 +1,14 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect } from "react";
-import { Text, StyleSheet, FlatList, Linking } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  FlatList,
+  Linking,
+  TouchableOpacity,
+  Share,
+  Platform,
+} from "react-native";
 import styled from "styled-components/native";
 import Poster from "../components/Poster";
 import { Movie, Tv } from "../types/apiType";
@@ -33,12 +41,42 @@ const Detail: React.FC<DetailScreenProps> = ({
     isMovie ? moviesApi.detail : tvApi.detail
   );
 
+  const shareMedia = async () => {
+    const isAndroid = Platform.OS === "android";
+    const homepage = isMovie
+      ? `https://www.imdb.com/${data.imdb_id}/`
+      : data.homepage;
+
+    if (isAndroid) {
+      await Share.share({
+        message: `${params.overview}\n click on : ${homepage}`,
+        title: params.title,
+      });
+    } else {
+      await Share.share({
+        url: isMovie ? `https://www.imdb.com/${data.imdb_id}/` : data.homepage,
+        title: params.title,
+      });
+    }
+  };
+  const ShareButton = () => (
+    <TouchableOpacity onPress={shareMedia}>
+      <Ionicons name="share-outline" color="white" size={24} />
+    </TouchableOpacity>
+  );
   // console.log(data);
   useEffect(() => {
     setOptions({
       title: "title" in params ? params.title : params.name,
     });
   }, []);
+
+  // !header 는 안에 data가 바뀌어도 rerender하지 않으므로 useEffect로 rerendering해준다.
+  useEffect(() => {
+    setOptions({
+      headerRight: () => <ShareButton />,
+    });
+  }, [data]);
 
   const openYoutube = async (videoId: string) => {
     const baseUrl = `https://m.youtube.com/watch?v=${videoId}`;
@@ -47,6 +85,7 @@ const Detail: React.FC<DetailScreenProps> = ({
 
     // ! 내 앱 내에서 열기
     await WebBrowser.openBrowserAsync(baseUrl);
+    // ? 안드로이드 10이상부터 webBrowser 안됨
   };
 
   return isLoading ? (
