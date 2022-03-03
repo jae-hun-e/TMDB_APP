@@ -59,11 +59,6 @@ const Detail: React.FC<DetailScreenProps> = ({
       });
     }
   };
-  const ShareButton = () => (
-    <TouchableOpacity onPress={shareMedia}>
-      <Ionicons name="share-outline" color="white" size={24} />
-    </TouchableOpacity>
-  );
   // console.log(data);
   useEffect(() => {
     setOptions({
@@ -74,17 +69,21 @@ const Detail: React.FC<DetailScreenProps> = ({
   // !header 는 안에 data가 바뀌어도 rerender하지 않으므로 useEffect로 rerendering해준다.
   useEffect(() => {
     setOptions({
-      headerRight: () => <ShareButton />,
+      headerRight: () => (
+        <TouchableOpacity onPress={shareMedia}>
+          <Ionicons name="share-outline" color="white" size={24} />
+        </TouchableOpacity>
+      ),
     });
   }, [data]);
 
   const openYoutube = async (videoId: string) => {
     const baseUrl = `https://m.youtube.com/watch?v=${videoId}`;
     // ! Youtube앱 (다른 앱)으로 들어가서 열기
-    // await Linking.openURL(baseUrl);
+    await Linking.openURL(baseUrl);
 
     // ! 내 앱 내에서 열기
-    await WebBrowser.openBrowserAsync(baseUrl);
+    // await WebBrowser.openBrowserAsync(baseUrl);
     // ? 안드로이드 10이상부터 webBrowser 안됨
   };
 

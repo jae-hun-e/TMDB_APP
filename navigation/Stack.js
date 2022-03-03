@@ -20,11 +20,7 @@ const Stack = () => {
         },
       }}
     >
-      <NativeStack.Screen
-        name="Detail"
-        component={Detail}
-        options={{ backgroundColor: "black" }}
-      />
+      <NativeStack.Screen name="Detail" component={Detail} />
     </NativeStack.Navigator>
   );
 };

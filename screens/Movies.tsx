@@ -48,7 +48,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
       original_title={item.title}
       release_date={item.release_date}
       overview={item.overview}
-      fillData={item}
+      fullData={item}
     />
   );
 
@@ -92,7 +92,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
                 original_title={movie.title}
                 overview={movie.overview}
                 vote_average={movie.vote_average}
-                fillData={movie}
+                fullData={movie}
               />
             ))}
           </Swiper>
@@ -112,7 +112,7 @@ export default Movies;
 
 const ListTitle = styled.Text`
   color: white;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
   margin: 0 0 10px 20px;
 `;

@@ -12,7 +12,7 @@ interface IComingProps {
   release_date?: string;
   overview: string;
   vote_average?: number;
-  fillData: Movie | Tv;
+  fullData: Movie | Tv;
 }
 
 const HContant: React.FC<IComingProps> = ({
@@ -21,15 +21,15 @@ const HContant: React.FC<IComingProps> = ({
   release_date,
   overview,
   vote_average,
-  fillData,
+  fullData,
 }) => {
   const navigation = useNavigation();
 
   const goToDetail = () => {
-    navigation.navigate("Stack", {
+    navigation.navigate("Stacks", {
       screen: "Detail",
       params: {
-        fillData,
+        fullData,
       },
     });
   };

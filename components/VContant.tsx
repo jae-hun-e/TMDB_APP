@@ -10,14 +10,14 @@ interface ITrendingProps {
   poster_path: string | null;
   original_title: string;
   vote_average: number;
-  fillData: Movie | Tv;
+  fullData: Movie | Tv;
 }
 
 const VContant: React.FC<ITrendingProps> = ({
   poster_path,
   original_title,
   vote_average,
-  fillData,
+  fullData,
 }) => {
   const navigation = useNavigation();
 
@@ -25,7 +25,7 @@ const VContant: React.FC<ITrendingProps> = ({
     navigation.navigate("Stack", {
       screen: "Detail",
       params: {
-        ...fillData,
+        ...fullData,
       },
     });
   };

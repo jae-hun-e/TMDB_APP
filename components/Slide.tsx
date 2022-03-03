@@ -19,7 +19,7 @@ interface ISlideProps {
   original_title: string;
   overview: string;
   vote_average: number;
-  fillData: Movie;
+  fullData: Movie;
 }
 
 const Slide: React.FC<ISlideProps> = ({
@@ -28,16 +28,16 @@ const Slide: React.FC<ISlideProps> = ({
   original_title,
   overview,
   vote_average,
-  fillData,
+  fullData,
 }) => {
   const isDark = useColorScheme() === "dark";
   const navigation = useNavigation();
 
   const goToDetail = () => {
-    navigation.navigate("Stack", {
+    navigation.navigate("Stacks", {
       screen: "Detail",
       params: {
-        ...fillData,
+        ...fullData,
       },
     });
   };

@@ -18,7 +18,7 @@ const HFlatList: React.FC<VFlatListProps> = ({ title, data }) => {
       poster_path={item.poster_path}
       original_title={item.title ?? item.name}
       vote_average={item.vote_average}
-      fillData={item}
+      fullData={item}
     />
   );
 
