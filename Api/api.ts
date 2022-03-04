@@ -11,14 +11,15 @@ export const moviesApi = {
       .catch(function (error) {
         throw error;
       }),
-  upComing: () =>
-    fetch(
-      `${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=ko&page=1&region=KR`
+  upComing: ({ pageParam }: any) => {
+    return fetch(
+      `${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=ko&page=${pageParam}&region=KR`
     )
       .then((res) => res.json())
       .catch(function (error) {
         throw error;
-      }),
+      });
+  },
 
   trending: () =>
     fetch(

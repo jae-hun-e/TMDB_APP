@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { FlatList, ListRenderItemInfo } from "react-native";
+import { Alert, FlatList, ListRenderItemInfo } from "react-native";
 // import Swiper from "react-native-web-swiper";
 // ! IOS에서는 스크롤 이벤트가 걸린다 => react-native-swiper로 변경 (npm i --save react-native-swiper@next)
 import Swiper from "react-native-swiper";
@@ -8,7 +8,7 @@ import Swiper from "react-native-swiper";
 import styled from "styled-components/native";
 import Slide from "../components/Slide";
 import HContant from "../components/HContant";
-import { useQuery, useQueryClient } from "react-query";
+import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { moviesApi } from "../Api/api";
 import { IMovieTypes, Movie } from "../types/apiType";
 import Loader from "../components/Loader";
@@ -20,15 +20,35 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
 
   const queryGroup = useQueryClient(); //!모든 쿼리 관장함
 
+  // ! useInfiniteQuery를 이용해서 page별 data 불러옴 => infinite scroll 구현
   const { isLoading: nowPlayingLoading, data: nowPlaying } =
     useQuery<IMovieTypes | null>(
       ["movies", "nowPlaying"],
       moviesApi.nowPlaying
     );
-  const { isLoading: upComingLoading, data: upComing } = useQuery<IMovieTypes>(
+  const {
+    isLoading: upComingLoading,
+    data: upComing,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery<IMovieTypes>(
     ["movies", "upComing"],
-    moviesApi.upComing
+    moviesApi.upComing,
+    {
+      getNextPageParam: (currentPage) => {
+        const nextPage = currentPage.page + 1;
+        return nextPage > currentPage.total_pages ? null : nextPage;
+      },
+    }
   );
+  // console.log(upComing);
+  // ! useInfiniteQuery가 받는 형식
+  /*{
+      'pagesParams' : [페이지 번호],
+      'pages': [
+        {moviesApi.upComing의 data}
+      ]
+    }*/
   const { isLoading: trendingLoading, data: trending } = useQuery<IMovieTypes>(
     ["movies", "trending"],
     moviesApi.trending
@@ -63,10 +83,18 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
   //   Object.values(nowPlaying?.results[0]).map((v) => typeof v)
   // );
 
+  const loadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
   return loading ? (
     <Loader />
   ) : upComing ? (
     <FlatList
+      onEndReached={loadMore} // ! 끝지점 도착 시 연속 스크롤
+      onEndReachedThreshold={0.5} // ! onEndReach 작동할 위치 지정(default = 0.5)
       refreshing={refreshing}
       onRefresh={onRefresh}
       ListHeaderComponent={
@@ -101,7 +129,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
         </>
       }
       keyExtractor={movieKeyExtractor}
-      data={upComing.results}
+      data={upComing.pages.map((page) => page.results).flat()}
       renderItem={renderVMedia}
       ItemSeparatorComponent={VSeparator}
     />
